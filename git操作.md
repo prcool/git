@@ -135,6 +135,16 @@ $ git checkout -- 文件名
 
 # 9、连接远程仓库
 
+要关联一个远程库，使用命令`git remote add origin git@server-name:path/repo-name.git`；
+
+关联后，使用命令`git push -u origin master`第一次推送master分支的所有内容；
+
+此后，每次本地提交后，只要有必要，就可以使用命令`git push origin master`推送最新修改；
+
+```
+git remote add origin https://github.com/prcool/git.git(仓库地址)
+```
+
 ###  git push origin与git push -u origin master的区别
 
 `$ git push origin`
@@ -535,6 +545,107 @@ $ git push origin :refs/tags/v0.9
 可以推送pull request给官方仓库来贡献代码。
 
 # 19、使用码云
+
+先在码云上创建仓库
+
+然后，我们在本地库上使用命令`git remote add`把它和Gitee的远程库关联：
+
+```
+git remote add origin git@gitee.com:liaoxuefeng/learngit.git
+```
+
+之后，就可以正常地用`git push`和`git pull`推送了！
+
+如果在使用命令`git remote add`时报错：
+
+```
+git remote add origin git@gitee.com:liaoxuefeng/learngit.git
+fatal: remote origin already exists.
+```
+
+这说明本地库已经关联了一个名叫`origin`的远程库，此时，可以先用`git remote -v`查看远程库信息：
+
+```
+git remote -v
+origin	git@github.com:michaelliao/learngit.git (fetch)
+origin	git@github.com:michaelliao/learngit.git (push)
+```
+
+可以看到，本地库已经关联了`origin`的远程库，并且，该远程库指向GitHub。
+
+我们可以删除已有的GitHub远程库：
+
+```
+git remote rm origin
+```
+
+再关联Gitee的远程库（注意路径中需要填写正确的用户名）：
+
+```
+git remote add origin git@gitee.com:liaoxuefeng/learngit.git
+```
+
+此时，我们再查看远程库信息：
+
+```
+git remote -v
+origin	git@gitee.com:liaoxuefeng/learngit.git (fetch)
+origin	git@gitee.com:liaoxuefeng/learngit.git (push)
+```
+
+现在可以看到，origin已经被关联到Gitee的远程库了。通过`git push`命令就可以把本地库推送到Gitee上。
+
+有的小伙伴又要问了，一个本地库能不能既关联GitHub，又关联Gitee呢？
+
+答案是肯定的，因为git本身是分布式版本控制系统，可以同步到另外一个远程库，当然也可以同步到另外两个远程库。
+
+使用多个远程库时，我们要注意，git给远程库起的默认名称是`origin`，如果有多个远程库，我们需要用不同的名称来标识不同的远程库。
+
+仍然以`learngit`本地库为例，我们先删除已关联的名为`origin`的远程库：
+
+```
+git remote rm origin
+```
+
+然后，先关联GitHub的远程库：
+
+```
+git remote add github git@github.com:michaelliao/learngit.git
+```
+
+注意，远程库的名称叫`github`，不叫`origin`了。
+
+接着，再关联Gitee的远程库：
+
+```
+git remote add gitee git@gitee.com:liaoxuefeng/learngit.git
+```
+
+同样注意，远程库的名称叫`gitee`，不叫`origin`。
+
+现在，我们用`git remote -v`查看远程库信息，可以看到两个远程库：
+
+```
+git remote -v
+gitee	git@gitee.com:liaoxuefeng/learngit.git (fetch)
+gitee	git@gitee.com:liaoxuefeng/learngit.git (push)
+github	git@github.com:michaelliao/learngit.git (fetch)
+github	git@github.com:michaelliao/learngit.git (push)
+```
+
+如果要推送到GitHub，使用命令：
+
+```
+git push github master
+```
+
+如果要推送到Gitee，使用命令：
+
+```
+git push gitee master
+```
+
+这样一来，我们的本地库就可以同时与多个远程库互相同步：
 
 使用多个远程库时，我们要注意，git给远程库起的默认名称是origin，如果有多个远程库，我们需要用不同的名称来标识不同的远程库。
 
