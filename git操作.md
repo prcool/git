@@ -800,9 +800,13 @@ warning: You appear to have cloned an empty repository.
 
 # 完整操作步骤
 
-```
+```cmd
+echo "# git" >> README.md
 git init
-git add .
-git commit
+git add README.md
+git commit -m "first commit"
+git branch -M master
+git remote add origin https://github.com/prcool/git.git(仓库地址)
+git push -u origin master
 ```
 
